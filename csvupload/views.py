@@ -34,7 +34,7 @@ index_data = {
         }
 
 def Most_Recent_5(request):
-    recent_records = main_table.objects.order_by('-id')[:5].values('name','alias_name','meta_details','group_id','maj_tag_id','min_tag_id')
+    recent_records = main_table.objects.order_by('-id')[:5].values('id','name','alias_name','meta_details','group_id','maj_tag_id','min_tag_id')
     if len(recent_records) == 0:
         index_data['Status'] = '204 - Most_Recent_5 No Content'
         return JsonResponse(index_data, status=204, safe=False)
@@ -79,7 +79,7 @@ def get_by_index(request, input_int):
     return JsonResponse(list(recent_records), safe=False)
     
 def get_by_group(request, input_int):
-    recent_records = main_table.object.filter(group_id=input_int).values()
+    recent_records = main_table.objects.filter(group_id=input_int).values()
     if len(recent_records) == 0:
         index_data['Status'] = '204 - No Content For Group ID'
         return JsonResponse(index_data, status=204, safe=False)
