@@ -3,7 +3,7 @@ import json
 
 from django import forms
 
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.urls import path, reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect

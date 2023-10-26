@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from django.views.decorators.cache import never_cache
+
 import json
+
 from .models import main_table, label_tag, label_group
 # Create your views here.
 index_data = {
@@ -14,7 +17,7 @@ index_data = {
                     'GroupTag': 'Group Tag [Can be Blank]',
                     'MajorTag': 'Major Tag from List of Tags [Can Be Blank]',
                     'MinorTag': 'Minor Tag from List of Tags [Can Be Blank]',
-                    'uploaded_csv': 'Record Oriented JSON [CAN NOT Be Blank ---- THIS IS THE WHOLE POINT ----]'
+                    'uploaded_csv': 'Record Oriented JSON [CAN NOT Be Blank]'
                 }
             },
             'sample_urls':{
@@ -33,13 +36,15 @@ index_data = {
             }
         }
 
+@never_cache
 def Most_Recent_5(request):
     recent_records = main_table.objects.order_by('-id')[:5].values('id','name','alias_name','meta_details','group_id','maj_tag_id','min_tag_id')
     if len(recent_records) == 0:
         index_data['Status'] = '204 - Most_Recent_5 No Content'
         return JsonResponse(index_data, status=204, safe=False)
     return JsonResponse(list(recent_records), safe=False)
-    
+ 
+@never_cache 
 def Group_list(request):
     recent_records = label_group.objects.order_by('-id').values()
     if len(recent_records) == 0:
@@ -47,7 +52,8 @@ def Group_list(request):
         return JsonResponse(index_data, status=204, safe=False)
     output = {i['id']: i['label'] for i in list(recent_records)}
     return JsonResponse(output, safe=False)
- 
+
+@never_cache 
 def Tag_list(request):
     recent_records = label_tag.objects.order_by('-id').values()  
     if len(recent_records) == 0:
@@ -56,14 +62,15 @@ def Tag_list(request):
     output = {i['id']: i['label'] for i in list(recent_records)}
     return JsonResponse(output, safe=False)
     
-    
+@never_cache    
 def get_by_name(request, input_str):
     recent_records = main_table.objects.filter(name=input_str).values()
     if len(recent_records) == 0:
         index_data['Status'] = '204 - No Content For File Name'
         return JsonResponse(index_data, status=204, safe=False)
     return JsonResponse(list(recent_records), safe=False)
-    
+
+@never_cache
 def get_by_alias(request, input_str):
     recent_records = main_table.objects.filter(alias_name=input_str).values()
     if len(recent_records) == 0:
@@ -71,6 +78,7 @@ def get_by_alias(request, input_str):
         return JsonResponse(index_data, status=204, safe=False)
     return JsonResponse(list(recent_records), safe=False)
     
+@never_cache
 def get_by_index(request, input_int):
     recent_records = main_table.objects.filter(id=input_int).values()
     if len(recent_records) == 0:
@@ -78,6 +86,7 @@ def get_by_index(request, input_int):
         return JsonResponse(index_data, status=204, safe=False)
     return JsonResponse(list(recent_records), safe=False)
     
+@never_cache
 def get_by_group(request, input_int):
     recent_records = main_table.objects.filter(group_id=input_int).values()
     if len(recent_records) == 0:
@@ -86,7 +95,7 @@ def get_by_group(request, input_int):
     return JsonResponse(list(recent_records), safe=False)
 
 
+@never_cache
 def index(request):
-    
     return JsonResponse(index_data)
     
