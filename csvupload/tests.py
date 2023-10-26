@@ -14,7 +14,7 @@ class DataBaseTest(TestCase):
 
     def test_insert_label_str_into_database(self):
         label_str = 'label_test'
-        my_model_instance = label_group(name=label_str)
+        my_model_instance = label_group(label=label_str)
         my_model_instance.save()
 
         saved_instance = label_group.objects.get(id=my_model_instance.id)
