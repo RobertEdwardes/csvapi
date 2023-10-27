@@ -6,6 +6,10 @@ from django.views.decorators.cache import never_cache
 import json
 
 from .models import main_table, label_tag, label_group
+
+import logging
+
+logger = logging.getLogger('file')
 # Create your views here.
 index_data = {
         'Intro': 'Welcome to the Index of the CSV to API demo',

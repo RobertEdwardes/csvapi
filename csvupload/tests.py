@@ -1,4 +1,5 @@
 from django.test import TestCase
+import csv
 from csvupload.models import main_table, label_group
 
 class DataBaseTest(TestCase):
@@ -24,8 +25,8 @@ class DataBaseTest(TestCase):
 class FileUploadTest(TestCase):
     def test_csv_insert_post(self):
         c = self.client
-        
+
         with open('test_data.csv', 'rb') as fp:
-            response = c.post("/admin/csv_upload.html",{"csv_upload": fp})
+            response = c.post("/admin/csvupload/upload-csv/",{"csv_upload": fp})
 
         self.assertEqual(response.status_code, 200) 

@@ -9,6 +9,10 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 from .models import label_tag, label_group, main_table
+
+import logging
+
+logger = logging.getLogger('file')
 # Register your models here.
 
 admin.site.register(label_tag)

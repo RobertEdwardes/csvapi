@@ -72,6 +72,33 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'csvapi.wsgi.application'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+    'standard': {
+        'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',  
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'app.log'),
+            'maxBytes': 10 * 1024 * 1024,  
+            'backupCount': 5,  
+            'formatter':'standard',
+        },
+    },
+    'loggers': {
+        'file': {
+            'handlers': ['file'],
+            'level': 'DEBUG',  
+            'propagate': True,
+        },
+    },
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
