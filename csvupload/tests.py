@@ -20,3 +20,12 @@ class DataBaseTest(TestCase):
         saved_instance = label_group.objects.get(id=my_model_instance.id)
 
         self.assertEqual(saved_instance.label, label_str)
+
+class FileUploadTest(TestCase):
+    def test_csv_insert_post(self):
+        c = self.client
+        
+        with open('test_data.csv', 'rb') as fp:
+            response = c.post("/admin/csv_upload.html",{"csv_upload": fp})
+
+        self.assertEqual(response.status_code, 200) 
