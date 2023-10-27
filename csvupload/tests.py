@@ -1,5 +1,5 @@
-from django.test import TestCase
-import csv
+from django.test import TestCase, Client
+from django.contrib.auth.models import User
 from csvupload.models import main_table, label_group
 
 class DataBaseTest(TestCase):
@@ -23,10 +23,17 @@ class DataBaseTest(TestCase):
         self.assertEqual(saved_instance.label, label_str)
 
 class FileUploadTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+
     def test_csv_insert_post(self):
-        c = self.client
+        c = Client()
+
+        login_successful = c.login(username='testuser', password='testpassword')
+
+        self.assertTrue(login_successful, "User login failed")
 
         with open('test_data.csv', 'rb') as fp:
-            response = c.post("/admin/csvupload/upload-csv/",{"csv_upload": fp})
+            response = c.post("/admin/csvupload/upload-csv/",{"csv_upload": fp}, follow=True)
 
         self.assertEqual(response.status_code, 200) 

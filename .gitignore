@@ -6,3 +6,4 @@
 
 # Ignore the __pycache__ directory
 csvupload/__pycache__/*
+*.log
