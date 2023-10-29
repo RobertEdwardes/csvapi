@@ -4,6 +4,7 @@ from django.contrib.staticfiles.testing import LiveServerTestCase
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
+import time
 
 from csvupload.models import main_table, label_group, label_tag
 
@@ -70,7 +71,7 @@ class LiveUiTesting(LiveServerTestCase):
     def test_login(self):
         self.selenium.get(f"{self.live_server_url}/admin/")
         username_input = self.selenium.find_element(By.NAME, "username")
-        username_input.send_keys("myuser")
+        username_input.send_keys("user1")
         password_input = self.selenium.find_element(By.NAME, "password")
-        password_input.send_keys("secret")
+        password_input.send_keys("password1")
         self.selenium.find_element(By.XPATH, '//input[@value="Log in"]').click()

@@ -1,9 +1,13 @@
-# Ignore SQLite3 database files
+#Ignore root files for local testing and buidling
+*.log
 *.sqlite3
 
-# Ignore the .projvenv directory
+# Ignore roots directories for local building
 /.projvenv/
+/.vscode/
 
 # Ignore the __pycache__ directory
 csvupload/__pycache__/*
-*.log
+
+# Ignore Static Files from manage.py collectstatic
+/staticfiles/
