@@ -1,4 +1,4 @@
-#### EXAMPLE (Uses Azure App Service Free Tier): [CSV TO API on AZURE](https://csvapitest.azurewebsites.net/)
+#### EXAMPLE (Uses Azure App Service): [CSV TO API on AZURE](https://csvapitest.azurewebsites.net/)
 
 ## Directions
 
