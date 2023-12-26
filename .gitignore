@@ -1,6 +1,7 @@
 #Ignore root files for local testing and buidling
 *.log
 *.sqlite3
+.venv
 
 # Ignore roots directories for local building
 /.projvenv/

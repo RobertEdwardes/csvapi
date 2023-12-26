@@ -4,6 +4,8 @@ from django.core import serializers
 from django.views.decorators.cache import never_cache
 
 import json
+import csv
+import itertools
 
 from .models import main_table, label_tag, label_group
 
@@ -100,6 +102,20 @@ def get_by_group(request, input_int):
 
 
 @never_cache
-def index(request):
+def json_doc(request):
     return JsonResponse(index_data)
+
+def index(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES['file']
+        csv_data = csv.reader(uploaded_file.read().decode('utf-8').splitlines())
+        header = next(csv_data)
+        csv_data_rows = []
+        for row in itertools.islice(csv_data, 5):
+            csv_data_rows.append(row)
+        JSON_DATA = [dict(zip(header, row)) for row in csv_data_rows]
+        json_string = json.dumps(JSON_DATA, indent=2)
+        context = {'json_string': json_string}
+        return render(request, 'index.html', context)
+    return render(request, 'index.html')
     
