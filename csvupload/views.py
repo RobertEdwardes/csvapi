@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from django.views.decorators.cache import never_cache
+from django.forms.models import model_to_dict
 
 import json
 import csv
@@ -87,6 +88,14 @@ def get_by_alias(request, input_str):
 @never_cache
 def get_by_index(request, input_int):
     recent_records = main_table.objects.filter(id=input_int).values()
+    if len(recent_records) == 0:
+        index_data['Status'] = '204 - No Content For Index'
+        return JsonResponse(index_data, status=204, safe=False)
+    return JsonResponse(list(recent_records), safe=False)
+
+@never_cache
+def get_example(request):
+    recent_records = main_table.objects.filter(id=1).values()
     if len(recent_records) == 0:
         index_data['Status'] = '204 - No Content For Index'
         return JsonResponse(index_data, status=204, safe=False)

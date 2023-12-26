@@ -10,34 +10,58 @@
         body {
             margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Set the height to the full viewport height */
         }
 
         main {
-            text-align: center; /* Optional: Center the content inside the main tag */
+            text-align: center; 
         }
         pre {
-            margin-top: 10vw;
             text-align: left;
+            max-width: 50vw;
+        }
+        form {
+            text-align: center;
+        }
+        form input{
+            padding: 1vh 0;
+        }
+        form #file{
+            padding-left: 4vw;
+        }
+        ul{
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li{
+            display: inline;
+            margin: 10px;
+        }
+        li a {
+            white-space: nowrap;
         }
     </style>
 <main>
-    <h2>CSV to JSONL
-        <h3>Truncates to top 5 row</h3>
+    <h2>CSV to record-oriented JSON Example
+        <h4>JSON example of first 5 rows in browser</h4>
     </h2>
 
     <form method="post" enctype="multipart/form-data" action="{% url 'index' %}">
         {% csrf_token %}
         <label for="file">Choose a file:</label>
-        <input type="file" name="file" id="file" accept=".csv">
         <br>
-        <button type="submit">Upload</button>
+        <input type="file" name="file" id="file" accept=".csv" required >
+        <br>
+        <button type="submit">Transform</button>
     </form>
+    <h6>No Data is Stored with example. <br> To see examples of API explore links below</h6>
     <ul>
         <li><a href="{% url 'json_doc' %}">API Index and Documnets</a></li>
         <li><a href="{% url 'Most_Recent_5' %}">Most Recent Uploads</a></li>
+        <li><a href="{% url 'get_example' %}">Example of Stored Data</a></li>
     </ul>
 </main>
     {% if json_string %}

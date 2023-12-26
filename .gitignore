@@ -1,6 +1,5 @@
 #Ignore root files for local testing and buidling
 *.log
-*.sqlite3
 .venv
 
 # Ignore roots directories for local building
@@ -11,4 +10,4 @@
 csvupload/__pycache__/*
 
 # Ignore Static Files from manage.py collectstatic
-/staticfiles/
+staticfiles/*
